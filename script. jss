@@ -1,0 +1,174 @@
+// Typing Animation
+const typing = document.querySelector("#typing");
+
+const roles = [
+  "Computer Science Student",
+  "Future Software Developer",
+  "Web Developer",
+  "Quick Learner",
+  "Problem Solver"
+];
+
+let roleIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function type() {
+  if (!typing) return;
+
+  let current = roles[roleIndex];
+
+  if (!deleting) {
+    typing.innerHTML = current.substring(0, charIndex++);
+    if (charIndex > current.length) {
+      deleting = true;
+      setTimeout(type, 1200);
+      return;
+    }
+  } else {
+    typing.innerHTML = current.substring(0, charIndex--);
+    if (charIndex < 0) {
+      deleting = false;
+      roleIndex++;
+      if (roleIndex >= roles.length) roleIndex = 0;
+    }
+  }
+
+  setTimeout(type, deleting ? 60 : 120);
+}
+
+type();
+
+
+// Scroll Reveal Animation
+
+const cards = document.querySelectorAll(".card,.box,.skill,.project");
+
+window.addEventListener("scroll", reveal);
+
+function reveal() {
+
+  cards.forEach(card => {
+
+    const top = card.getBoundingClientRect().top;
+
+    if(top < window.innerHeight-100){
+
+      card.classList.add("show");
+
+    }
+
+  });
+
+}
+
+reveal();
+
+
+// Scroll To Top Button
+
+const btn = document.createElement("button");
+
+btn.innerHTML="⬆";
+
+btn.id="topBtn";
+
+document.body.appendChild(btn);
+
+btn.style.position="fixed";
+btn.style.bottom="20px";
+btn.style.right="20px";
+btn.style.width="50px";
+btn.style.height="50px";
+btn.style.borderRadius="50%";
+btn.style.border="none";
+btn.style.background="#16a34a";
+btn.style.color="#fff";
+btn.style.fontSize="20px";
+btn.style.cursor="pointer";
+btn.style.display="none";
+btn.style.boxShadow="0 5px 15px rgba(0,0,0,.3)";
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>300){
+
+btn.style.display="block";
+
+}else{
+
+btn.style.display="none";
+
+}
+
+});
+
+btn.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+
+// Navbar Active Link
+
+const sections=document.querySelectorAll("section");
+
+const navLinks=document.querySelectorAll("nav ul li a");
+
+window.addEventListener("scroll",()=>{
+
+let current="";
+
+sections.forEach(section=>{
+
+const sectionTop=section.offsetTop-120;
+
+if(pageYOffset>=sectionTop){
+
+current=section.getAttribute("id");
+
+}
+
+});
+
+navLinks.forEach(link=>{
+
+link.classList.remove("active");
+
+if(link.getAttribute("href")==="#"+current){
+
+link.classList.add("active");
+
+}
+
+});
+
+});
+
+
+// Image Hover Effect
+
+const image=document.querySelector(".image img");
+
+if(image){
+
+image.addEventListener("mouseover",()=>{
+
+image.style.transform="scale(1.05)";
+
+});
+
+image.addEventListener("mouseout",()=>{
+
+image.style.transform="scale(1)";
+
+});
+
+}
